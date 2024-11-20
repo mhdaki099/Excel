@@ -53,6 +53,7 @@ def user_page():
     st.title("Out Of Stocks Report")
     df = load_file()
     if df is not None:
+        df = df.fillna(" ").replace("nan", " ", regex=True)
         column_a_index = 0
         column_d_index = 3
         column_e_index = 4
