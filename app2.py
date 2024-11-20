@@ -49,15 +49,14 @@ def admin_page():
         else:
             st.warning("No file to save or display.")
 
-
 def user_page():
     st.title("Out Of Stocks Report")
     df = load_file()
     if df is not None:
         column_a_index = 0
         column_d_index = 3
-        column_e_index = 4 
-        column_m_index = 12 
+        column_e_index = 4
+        column_m_index = 12
         column_n_index = 13
         column_o_index = 14
 
@@ -71,6 +70,11 @@ def user_page():
                 ((df[df.columns[column_e_index]] == "A") | (df[df.columns[column_e_index]] == "B")) &
                 (df[df.columns[column_m_index]] == "OOS")
             ]
+
+            # Input box for searching Item Code
+            item_code = st.text_input("Search by Item Code", "")
+            if item_code:
+                df_filtered = df_filtered[df_filtered[df.columns[column_a_index]].astype(str).str.contains(item_code, case=False, na=False)]
 
             st.write("Filtered Data Preview:")
             hide_table_row_index = """
