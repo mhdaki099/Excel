@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-from st_aggrid import AgGrid, GridOptionsBuilder
 
 # Path to save the uploaded file (you can modify this based on where you want to store the file)
 file_path = "uploaded_file.xlsx"
@@ -71,7 +70,6 @@ def user_page():
         if (column_a_index < len(df.columns) and column_d_index < len(df.columns) and 
             column_n_index < len(df.columns) and column_o_index < len(df.columns)):
 
-            # Create 'Remarks' column
             df['Remarks'] = df.iloc[:, column_n_index].astype(str) + ' ' + df.iloc[:, column_o_index].astype(str)
 
             item_search = st.text_input("Search for an Item Code:")
@@ -82,16 +80,23 @@ def user_page():
 
             st.write("Filtered Data Preview:")
 
-            # Only select the required columns: Column A, D, and 'Remarks'
-            df_filtered = df_filtered[[df.columns[column_a_index], df.columns[column_d_index], 'Remarks']]
+            hide_table_row_index = """
+                    <style>
+                    .streamlit-expanderHeader, .css-1h6uug3, .css-1d391kg, .css-10trblm {
+                        display: none;
+                    }
+                    .css-1v3fvcr {
+                        overflow-x: auto;
+                    }
+                    .css-1v3fvcr table {
+                        width: 100%;
+                        table-layout: fixed;
+                    }
+                    </style>
+                    """
+            st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-            # Set up AgGrid with options to freeze the first column (Column A)
-            gb = GridOptionsBuilder.from_dataframe(df_filtered)
-            # gb.configure_column(df.columns[column_a_index], pinned="left")  # Freeze the first column
-            grid_options = gb.build()
-
-            # Display the dataframe with the pinned first column using AgGrid
-            AgGrid(df_filtered, gridOptions=grid_options)
+            st.dataframe(df_filtered[[df.columns[column_a_index], df.columns[column_d_index], 'Remarks']], use_container_width=True)
 
         else:
             st.warning("One or more required columns not found in the uploaded file.")
