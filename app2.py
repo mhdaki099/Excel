@@ -89,7 +89,7 @@ def user_page():
                     """
             st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-            st.dataframe(df_filtered[[df.columns[column_a_index], df.columns[column_d_index], df.columns[column_e_index], 'Remarks']], use_container_width=True)
+            st.dataframe(df_filtered[[df.columns[column_a_index], df.columns[column_d_index], 'Remarks']], use_container_width=True)
 
         else:
             st.warning("One or more required columns not found in the uploaded file.")
