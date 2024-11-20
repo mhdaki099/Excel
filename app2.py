@@ -91,7 +91,7 @@ def user_page():
             grid_options = gb.build()
 
             # Display the dataframe with the pinned first column using AgGrid
-            AgGrid(df_filtered, gridOptions=grid_options, use_container_width=True)
+            AgGrid(df_filtered, gridOptions=grid_options)
 
         else:
             st.warning("One or more required columns not found in the uploaded file.")
