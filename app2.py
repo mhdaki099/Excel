@@ -87,7 +87,7 @@ def user_page():
 
             # Set up AgGrid with options to freeze the first column (Column A)
             gb = GridOptionsBuilder.from_dataframe(df_filtered)
-            gb.configure_column(df.columns[column_a_index], pinned="left")  # Freeze the first column
+            # gb.configure_column(df.columns[column_a_index], pinned="left")  # Freeze the first column
             grid_options = gb.build()
 
             # Display the dataframe with the pinned first column using AgGrid
